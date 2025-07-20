@@ -95,10 +95,14 @@ const CollectionView = () => {
     });
 
   const fetchProfiles = async (dids: string[]) => {
+    const labelerDids = localStorage.labelerDids ?? "did:web:cgv.hukoubook.com"
     const client = new Client({handler: agent})
     const res = await client.get("app.bsky.actor.getProfiles", {
       params: {
         actors: dids as ActorIdentifier[]
+      },
+      headers: {
+        'atproto-accept-labelers': labelerDids
       }
     })
     if (!res.ok) throw new Error(res.data.error);
@@ -119,6 +123,8 @@ const CollectionView = () => {
     let blockedDids: string[];
     // muted: actor muted viewer 
     let mutedDids: string[];
+    // labels: profile labels val
+    let labels: any = {}
 
     if (specialCheck()) {
       const subjects = res.data.records.map((record) => record.value.subject as string)
@@ -126,6 +132,9 @@ const CollectionView = () => {
       for (const dids of splitArray(subjects, 25)) {
         profiles = profiles.concat(await fetchProfiles(dids))
       }
+      profiles.forEach((profile) => {
+        labels[profile.did] = profile.labels.map((label: any) => label.val)
+      })
       const existsDids = profiles.map((profile) => profile.did)
       missingDids = subjects.filter((subject) => existsDids.includes(subject) == false)
       blockedDids = profiles.filter((profile) => profile.viewer.blockedBy).map((profile) => profile.did)
@@ -133,9 +142,11 @@ const CollectionView = () => {
     }
 
     const getNote = (actor: string) => {
-      if (missingDids.includes(actor)) return "missing"
-      if (blockedDids.includes(actor)) return "blocked"
-      if (mutedDids.includes(actor)) return "muted"
+      let note: string[] = labels[actor]
+      if (missingDids.includes(actor)) note.push("missing")
+      if (blockedDids.includes(actor)) note.push("blocked")
+      if (mutedDids.includes(actor)) note.push("muted")
+      return note.join(',')
     }
 
     setCursor(res.data.records.length < LIMIT ? undefined : res.data.cursor);
