@@ -1,8 +1,8 @@
 {
-  "client_id": "https://pdsls.dev/oauth-client-metadata.json",
+  "client_id": "https://pdsls.hukoubook.com/oauth-client-metadata.json",
   "client_name": "PDSls",
-  "client_uri": "https://pdsls.dev",
-  "redirect_uris": ["https://pdsls.dev/"],
+  "client_uri": "https://pdsls.hukoubook.com",
+  "redirect_uris": ["https://pdsls.hukoubook.com/"],
   "scope": "atproto transition:generic",
   "grant_types": ["authorization_code", "refresh_token"],
   "response_types": ["code"],
