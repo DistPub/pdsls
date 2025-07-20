@@ -173,6 +173,24 @@ const Settings = () => {
                   />
                 </div>
               </div>
+              
+              <div class="mt-2 flex flex-col gap-1 border-t border-neutral-500 pt-2">
+                <div class="flex flex-col gap-1">
+                  <label for="plcDirectory" class="select-none font-semibold">
+                    Labeler Dids
+                  </label>
+                  <TextInput
+                    id="labelerDids"
+                    value={localStorage.labelerDids || "did:web:cgv.hukoubook.com"}
+                    onInput={(e) => {
+                      e.currentTarget.value.length ?
+                        (localStorage.labelerDids = e.currentTarget.value)
+                      : localStorage.removeItem("labelerDids");
+                    }}
+                  />
+                </div>
+              </div>
+              
               <div class="mt-2 flex flex-col gap-1 border-t border-neutral-500 pt-2">
                 <div class="flex items-center gap-1">
                   <input
