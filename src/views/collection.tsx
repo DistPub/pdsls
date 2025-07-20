@@ -147,7 +147,7 @@ const CollectionView = () => {
       if (blockedDids.includes(actor)) note.push("blocked")
       if (mutedDids.includes(actor)) note.push("muted")
       let noteString = JSON.stringify(note)
-      noteString = noteString.slice(1, note.length - 1)
+      noteString = noteString.slice(1, noteString.length - 1)
       return note
     }
 
