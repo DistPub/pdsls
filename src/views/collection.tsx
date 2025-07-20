@@ -146,7 +146,9 @@ const CollectionView = () => {
       if (missingDids.includes(actor)) note.push("missing")
       if (blockedDids.includes(actor)) note.push("blocked")
       if (mutedDids.includes(actor)) note.push("muted")
-      return note.join(',')
+      let noteString = JSON.stringify(note)
+      noteString = noteString.slice(1, note.length - 1)
+      return note
     }
 
     setCursor(res.data.records.length < LIMIT ? undefined : res.data.cursor);
