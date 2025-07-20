@@ -21,6 +21,12 @@ interface AtprotoRecord {
   note?: string;
 }
 
+const recordInfoToString = (record: AtprotoRecord) => {
+  let data = JSON.stringify(record.record.value)
+  if (record.note) data = data + ' ' + record.note
+  return data
+}
+
 const LIMIT = 100;
 
 const RecordLink = (props: { record: AtprotoRecord; index: number }) => {
@@ -317,7 +323,7 @@ const CollectionView = () => {
       <div class="flex flex-col font-mono">
         <For
           each={records.filter((rec) =>
-            filter() ? JSON.stringify(rec.record.value).includes(filter()!) : true,
+            filter() ? recordInfoToString(rec).includes(filter()!) : true,
           )}
         >
           {(record, index) => (
