@@ -210,7 +210,7 @@ const CollectionView = () => {
     setRecords(
       records
         .map((record, index) =>
-          JSON.stringify(record.record.value).includes(filter() ?? "") ? index : undefined,
+          recordInfoToString(record).includes(filter() ?? "") ? index : undefined,
         )
         .filter((i) => i !== undefined),
       "toDelete",
