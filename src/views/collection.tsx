@@ -142,7 +142,7 @@ const CollectionView = () => {
     }
 
     const getNote = (actor: string) => {
-      let note: string[] = labels[actor]
+      let note: string[] = labels[actor] ?? []
       if (missingDids.includes(actor)) note.push("missing")
       if (blockedDids.includes(actor)) note.push("blocked")
       if (mutedDids.includes(actor)) note.push("muted")
