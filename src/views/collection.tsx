@@ -168,6 +168,12 @@ const CollectionView = () => {
   };
 
   const [response, { refetch }] = createResource(fetchRecords);
+  const wrapperRefetch = async () => {
+    // if auto load more
+    do {
+      await refetch()
+    } while (localStorage.loadMore == "true" && cursor())
+  }
 
   const deleteRecords = async () => {
     const writes = records
@@ -320,7 +326,7 @@ const CollectionView = () => {
               <Show when={!response.loading}>
                 <button
                   type="button"
-                  onclick={() => refetch()}
+                  onclick={() => wrapperRefetch()}
                   class="dark:hover:bg-dark-300 rounded-lg border border-gray-400 bg-transparent px-2 py-1.5 text-xs font-bold hover:bg-zinc-100 focus:border-blue-500 focus:outline-none"
                 >
                   Load More

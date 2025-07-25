@@ -17,6 +17,7 @@ export const [showHandle, setShowHandle] = createSignal(localStorage.showHandle 
 export const [backlinksEnabled, setBacklinksEnabled] = createSignal(
   localStorage.backlinks === "true",
 );
+export const [loadMoreEnabled, setLoadMoreEnabled] = createSignal(localStorage.loadMore === "true")
 export const [hideMedia, setHideMedia] = createSignal(localStorage.hideMedia === "true");
 export const [kawaii, setKawaii] = createSignal(localStorage.kawaii === "true");
 
@@ -119,6 +120,22 @@ const Settings = () => {
               </button>
             </div>
             <div class="mt-4 flex flex-col gap-1 border-t border-neutral-500 pt-2">
+              <div class="flex items-center gap-1">
+                <input
+                  id="load_more"
+                  class="size-4"
+                  type="checkbox"
+                  checked={localStorage.loadMore === "true"}
+                  onChange={(e) => {
+                    localStorage.loadMore = e.currentTarget.checked;
+                    setLoadMoreEnabled(e.currentTarget.checked);
+                  }}
+                />
+                <label for="load_more" class="select-none font-semibold">
+                  Auto load more
+                </label>
+                <div class="i-lucide-send-to-back" />
+              </div>
               <div class="flex items-center gap-1">
                 <input
                   id="backlinks"
