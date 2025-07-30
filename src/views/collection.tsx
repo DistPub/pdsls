@@ -7,7 +7,7 @@ import { JSONType, JSONValue } from "../components/json.jsx";
 import { agent, loginState } from "../components/login.jsx";
 import { createStore } from "solid-js/store";
 import Tooltip from "../components/tooltip.jsx";
-import { localDateFromTimestamp } from "../utils/date.js";
+import { computeProfileActiveNote, localDateFromTimestamp } from "../utils/date.js";
 import { $type, ActorIdentifier, InferXRPCBodyOutput } from "@atcute/lexicons";
 import { ComAtprotoRepoApplyWrites, ComAtprotoRepoGetRecord } from "@atcute/atproto";
 import { TextInput } from "../components/text-input.jsx";
@@ -134,6 +134,7 @@ const CollectionView = () => {
       }
       profiles.forEach((profile) => {
         labels[profile.did] = profile.labels.map((label: any) => label.val)
+        labels[profile.did].push(computeProfileActiveNote(new Date(Math.max(...profile.labels.map((label: any) => new Date(label.cts))))))
       })
       const existsDids = profiles.map((profile) => profile.did)
       missingDids = subjects.filter((subject) => existsDids.includes(subject) == false)
