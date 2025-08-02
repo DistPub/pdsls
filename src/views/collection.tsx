@@ -134,7 +134,7 @@ const CollectionView = () => {
       }
       profiles.forEach((profile) => {
         labels[profile.did] = profile.labels.map((label: any) => label.val)
-        labels[profile.did].push(computeProfileActiveNote(new Date(Math.max(...profile.labels.map((label: any) => new Date(label.cts))))))
+        labels[profile.did].push(computeProfileActiveNote(new Date(Math.max(new Date(profile.createdAt), ...profile.labels.map((label: any) => new Date(label.cts))))))
       })
       const existsDids = profiles.map((profile) => profile.did)
       missingDids = subjects.filter((subject) => existsDids.includes(subject) == false)
