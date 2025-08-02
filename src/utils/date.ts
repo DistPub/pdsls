@@ -5,6 +5,7 @@ const localDateFromTimestamp = (timestamp: number) =>
     .replace("T", " ");
 
 const computeProfileActiveNote = (time: Date) => {
+  if (isNaN(time)) return "deactive"
   const now = new Date()
   const offset = now.getTime() - time.getTime()
 
