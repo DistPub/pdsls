@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const domain = process.env.APP_DOMAIN || "pdsls.dev";
+const domain = process.env.APP_DOMAIN || "pdsls.hukoubook.com";
 const protocol = process.env.APP_PROTOCOL || "https";
 const baseUrl = `${protocol}://${domain}`;
 

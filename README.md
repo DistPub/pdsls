@@ -13,7 +13,7 @@ bun run build            # bundles the production app
 bunx wrangler pages dev  # runs worker locally
 ```
 
-Set `APP_DOMAIN` (default: `pdsls.dev`) and `APP_PROTOCOL` (default: `https`) to configure the base URL used in the generated OAuth and OpenSearch metadata files.
+Set `APP_DOMAIN` (default: `pdsls.hukoubook.com`) and `APP_PROTOCOL` (default: `https`) to configure the base URL used in the generated OAuth and OpenSearch metadata files.
 
 Cloudflare Pages builds should use `bun run pages:build` with `dist` as the build output directory.
 
