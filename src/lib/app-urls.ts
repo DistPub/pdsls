@@ -2,6 +2,7 @@ export type AppUrl = `${string}.${string}` | `localhost:${number}`;
 
 enum App {
   Bluesky,
+  Fatesky,
   Tangled,
   Pinksea,
   Blento,
@@ -23,6 +24,7 @@ export const appList: Record<AppUrl, App> = {
   "reddwarf.app": App.Bluesky,
   "mu.social": App.Bluesky,
   "cope.works": App.Bluesky,
+  "app.hukoubook.com": App.Fatesky,
   "tangled.org": App.Tangled,
   "pinksea.art": App.Pinksea,
   "blento.app": App.Blento,
@@ -32,6 +34,32 @@ export const appList: Record<AppUrl, App> = {
 };
 
 export const appHandleLink: Record<App, (url: string[]) => string> = {
+  [App.Fatesky]: (path) => {
+    const baseType = path[0];
+    const user = path[1];
+
+    if (baseType === "profile") {
+      if (path[2]) {
+        const type = path[2];
+        const rkey = path[3];
+
+        if (type === "post") {
+          return `at://${user}/app.bsky.feed.post/${rkey}`;
+        } else if (type === "lists") {
+          return `at://${user}/app.bsky.graph.list/${rkey}`;
+        } else if (type === "feed") {
+          return `at://${user}/app.bsky.feed.generator/${rkey}`;
+        } else if (type === "follows") {
+          return `at://${user}/app.bsky.graph.follow/${rkey}`;
+        }
+      } else {
+        return `at://${user}`;
+      }
+    } else if (baseType === "starter-pack") {
+      return `at://${user}/app.bsky.graph.starterpack/${path[2]}`;
+    }
+    return `at://${user}`;
+  },
   [App.Bluesky]: (path) => {
     const baseType = path[0];
     const user = path[1];

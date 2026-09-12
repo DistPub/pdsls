@@ -37,7 +37,18 @@ const faviconWrapper = (children: any) => (
   <div class="flex size-4 items-center justify-center">{children}</div>
 );
 
+const fateskyClient = {
+  label: "Fatesky",
+  hostname: "app.hukoubook.com",
+  transform: (url: string) => url.replace("https://bsky.app", "https://app.hukoubook.com"),
+};
+
 const bskyAltClients = [
+  {
+    label: "Bluesky",
+    hostname: "bsky.app",
+    transform: (url: string) => url,
+  },
   {
     label: "Blacksky",
     hostname: "blacksky.app",
@@ -274,7 +285,11 @@ export const RecordView = () => {
                 </Show>
                 <Show when={externalLink()}>
                   {(link) => {
-                    const bskyAlts = () =>
+                    const primary = () => ({
+                      ...fateskyClient,
+                      link: fateskyClient.transform(link().link),
+                    });
+                    const alts = () =>
                       link().link.startsWith("https://bsky.app")
                         ? bskyAltClients.map((alt) => ({
                             ...alt,
@@ -288,28 +303,28 @@ export const RecordView = () => {
                         onMouseLeave={() => setShowAlternates(false)}
                       >
                         <a
-                          href={link().link}
+                          href={primary().link}
                           target="_blank"
-                          title={`Open on ${link().label}`}
+                          title={`Open on ${primary().label}`}
                           class="flex p-1.5"
                           classList={{
                             "rounded-sm hover:bg-neutral-200 active:bg-neutral-300 dark:hover:bg-neutral-700 dark:active:bg-neutral-600":
-                              !bskyAlts().length,
+                              !alts().length,
                             "bg-neutral-50 rounded-t dark:bg-dark-200 hover:bg-neutral-200/50 active:bg-neutral-200 dark:hover:bg-neutral-700 dark:active:bg-neutral-600":
-                              showAlternates() && bskyAlts().length > 0,
+                              showAlternates() && alts().length > 0,
                           }}
                         >
                           <Favicon
-                            domain={new URL(link().link).hostname}
+                            domain={primary().hostname}
                             wrapper={faviconWrapper}
                           />
                         </a>
-                        <Show when={bskyAlts().length > 0}>
+                        <Show when={alts().length > 0}>
                           <div
                             class="dark:bg-dark-200 absolute top-full left-0 z-10 flex flex-col overflow-hidden rounded-b bg-neutral-50 shadow-xs"
                             classList={{ invisible: !showAlternates() }}
                           >
-                            <For each={bskyAlts()}>
+                            <For each={alts()}>
                               {(alt) => (
                                 <a
                                   href={alt.link}
