@@ -9,3 +9,4 @@ public/opensearch.xml
 public/_worker.js
 .wrangler
 .claude
+.omo/

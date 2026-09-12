@@ -1,4 +1,7 @@
 /* @refresh reload */
+import "core-js/stable";
+import "core-js/web";
+
 import { Route, Router } from "@solidjs/router";
 import { render } from "solid-js/web";
 

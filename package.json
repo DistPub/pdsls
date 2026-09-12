@@ -49,6 +49,7 @@
     "@takumi-rs/wasm": "^2.13.7",
     "@tanstack/solid-virtual": "^3.13.39",
     "codemirror": "^6.0.2",
+    "core-js": "^3.50.0",
     "solid-js": "^1.9.15",
     "valibot": "^1.5.0"
   },
@@ -62,6 +63,7 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.3.0",
+    "vite-plugin-mkcert": "^2.1.0",
     "vite-plugin-solid": "^2.11.14"
   },
   "overrides": {

@@ -249,6 +249,15 @@ export const Home = () => {
           <span class="iconify i-tangled text-black dark:text-white"></span>
           Source
         </FooterLink>
+        •
+        <FooterLink href="https://app.hukoubook.com" color="after:text-blue-500">
+          <img
+            src="https://app.hukoubook.com/favicon.ico"
+            alt=""
+            class="block size-4 rounded-sm"
+          />
+          Fatesky
+        </FooterLink>
       </div>
     </div>
   );

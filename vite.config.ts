@@ -1,13 +1,28 @@
 import { execSync } from "child_process";
+import os from "os";
 
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
+import mkcert from "vite-plugin-mkcert";
 import solidPlugin from "vite-plugin-solid";
 
 import metadata from "./public/oauth-client-metadata.json" with { type: "json" };
 
 const SERVER_HOST = "127.0.0.1";
 const SERVER_PORT = 13213;
+
+const getLanIp = (): string => {
+  for (const interfaces of Object.values(os.networkInterfaces())) {
+    for (const iface of interfaces ?? []) {
+      if (iface.family === "IPv4" && !iface.internal && !iface.address.startsWith("127.")) {
+        return iface.address;
+      }
+    }
+  }
+  return SERVER_HOST;
+};
+
+const LAN_IP = getLanIp();
 
 const getVersion = (): string => {
   try {
@@ -33,6 +48,7 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
     solidPlugin(),
+    mkcert({ hosts: ["localhost", SERVER_HOST, LAN_IP] }),
     {
       name: "oauth",
       config(_conf, { command }) {
@@ -66,7 +82,7 @@ export default defineConfig({
     port: SERVER_PORT,
   },
   build: {
-    target: "esnext",
+    target: "safari16",
   },
   resolve: {
     dedupe: [
